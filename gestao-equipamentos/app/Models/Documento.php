@@ -11,25 +11,22 @@ class Documento extends Model
 
     protected $table = 'documentos';
 
+    protected $fillable = [
+        'tipo', 'data_validade', 'nome', 'url', 'instituicao_id', 'vistoria_id','relatorio_id'
+    ];
 
-    // Permite a atribuição em massa para esses campos
-    protected $fillable = ['tipo', 'data_validade', 'nome', 'url', 'instituicao_id', 'vistoria_id'];
-
-    /**
-     * Define a relação entre Documento e Instituicao.
-     * Um documento pode estar associado a uma instituição.
-     */
     public function instituicao()
     {
-        return $this->belongsTo(Instituicao::class); // Relacionamento: um documento pertence a uma instituição
+        return $this->belongsTo(Instituicao::class, 'instituicao_id');
     }
 
-    /**
-     * Define a relação entre Documento e Vistoria.
-     * Um documento pode estar associado a uma vistoria.
-     */
     public function vistoria()
     {
-        return $this->belongsTo(Vistoria::class); // Relacionamento: um documento pertence a uma vistoria
+        return $this->belongsTo(Vistoria::class, 'vistoria_id');
+    }
+
+    public function relatorio()
+    {
+        return $this->belongsTo(Relatorio::class, 'relatorio_id');
     }
 }

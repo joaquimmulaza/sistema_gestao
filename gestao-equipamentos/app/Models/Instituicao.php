@@ -9,6 +9,7 @@ class Instituicao extends Model
 {
     use HasFactory;
     protected $table = 'instituicoes';
+    
 
     protected $fillable = ['nome', 'activa', 'data_registo'];
 }

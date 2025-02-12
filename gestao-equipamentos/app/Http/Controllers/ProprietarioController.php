@@ -9,36 +9,55 @@ class ProprietarioController extends Controller
 {
     public function index()
     {
-        return Proprietario::all();
+        $proprietarios = Proprietario::all();
+        return view('proprietarios.index', compact('proprietarios'));
+    }
+
+    public function create()
+    {
+        return view('proprietarios.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nome' => 'required|string|max:255',
-            'telefone' => 'required|string',
-            'nBilhete' => 'required|string|unique:proprietarios',
-            'validadeBilhete' => 'required|date',
+            'nome' => 'required',
+            'n_bilhete' => 'required|unique:proprietarios',
+            'validade_bilhete' => 'required|date',
         ]);
 
-        return Proprietario::create($request->all());
+        Proprietario::create($request->all());
+
+        return redirect()->route('proprietarios.index')->with('success', 'Proprietário cadastrado com sucesso!');
     }
 
-    public function show($id)
+    public function show(Proprietario $proprietario)
     {
-        return Proprietario::findOrFail($id);
+        return view('proprietarios.show', compact('proprietario'));
     }
 
-    public function update(Request $request, $id)
+    public function edit(Proprietario $proprietario)
     {
-        $proprietario = Proprietario::findOrFail($id);
+        return view('proprietarios.edit', compact('proprietario'));
+    }
+
+    public function update(Request $request, Proprietario $proprietario)
+    {
+        $request->validate([
+            'nome' => 'required',
+            'n_bilhete' => 'required|unique:proprietarios,n_bilhete,' . $proprietario->id,
+            'validade_bilhete' => 'required|date',
+        ]);
+
         $proprietario->update($request->all());
 
-        return $proprietario;
+        return redirect()->route('proprietarios.index')->with('success', 'Proprietário atualizado com sucesso!');
     }
 
-    public function destroy($id)
+    public function destroy(Proprietario $proprietario)
     {
-        return Proprietario::destroy($id);
+        $proprietario->delete();
+
+        return redirect()->route('proprietarios.index')->with('success', 'Proprietário excluído com sucesso!');
     }
 }

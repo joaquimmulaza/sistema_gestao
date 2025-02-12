@@ -3,41 +3,72 @@
 namespace App\Http\Controllers;
 
 use App\Models\Relatorio;
+use App\Models\Vistoria;
 use Illuminate\Http\Request;
 
 class RelatorioController extends Controller
 {
     public function index()
     {
-        return Relatorio::all();
+        $relatorios = Relatorio::with('vistoria')->paginate(10);
+        return view('relatorios.index', compact('relatorios'));
+    }
+
+    public function create()
+    {
+        $vistorias = Vistoria::all();
+        return view('relatorios.create', compact('vistorias'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'titulo' => 'required|string|max:255',
+            'titulo' => 'required|string|max:191',
             'data' => 'required|date',
-            'descricao' => 'nullable|string',
+            'descricao' => 'required',
+            'vistoria_id' => 'required|exists:vistorias,id',
         ]);
 
-        return Relatorio::create($request->all());
+        Relatorio::create($request->all());
+
+        return redirect()->route('relatorios.index')->with('success', 'Relatório criado com sucesso!');
     }
 
-    public function show($id)
+    public function show(Relatorio $relatorio)
     {
-        return Relatorio::findOrFail($id);
+        return view('relatorios.show', compact('relatorio'));
     }
 
-    public function update(Request $request, $id)
+    public function edit(Relatorio $relatorio)
     {
-        $relatorio = Relatorio::findOrFail($id);
+        $vistorias = Vistoria::all();
+        return view('relatorios.edit', compact('relatorio', 'vistorias'));
+    }
+
+    public function update(Request $request, Relatorio $relatorio)
+    {
+        $request->validate([
+            'titulo' => 'required|string|max:191',
+            'data' => 'required|date',
+            'descricao' => 'required',
+            'vistoria_id' => 'required|exists:vistorias,id',
+        ]);
+
         $relatorio->update($request->all());
 
-        return $relatorio;
+        return redirect()->route('relatorios.index')->with('success', 'Relatório atualizado com sucesso!');
     }
 
-    public function destroy($id)
+    public function destroy(Relatorio $relatorio)
     {
-        return Relatorio::destroy($id);
+        $relatorio->delete();
+        return redirect()->route('relatorios.index')->with('success', 'Relatório excluído com sucesso!');
+    }
+
+    public function listarPorVistoria($vistoria_id)
+    {
+        $relatorios = Relatorio::where('vistoria_id', $vistoria_id)->get();
+        return view('relatorios.listar_por_vistoria', compact('relatorios'));
     }
 }
+
