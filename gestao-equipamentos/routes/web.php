@@ -35,12 +35,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('instituicoes', InstituicaoController::class)->parameters([
     'instituicoes' => 'instituicao',
-]);;
+]);
 Route::resource('proprietarios', ProprietarioController::class);
 Route::resource('vistorias', VistoriaController::class);
 Route::resource('relatorios', RelatorioController::class);
 Route::resource('documentos', DocumentoController::class);
-Route::resource('utilizadores', UtilizadorController::class);
+Route::resource('utilizadores', UtilizadorController::class)->parameters(['utilizadores' => 'utilizadores']);
 Route::resource('logs', LogEntryController::class);
 Route::get('documentos/instituicao/{id}', [DocumentoController::class, 'listarPorInstituicao'])->name('documentos.instituicao');
 Route::get('documentos/vistoria/{id}', [DocumentoController::class, 'listarPorVistoria'])->name('documentos.vistoria');
@@ -50,3 +50,7 @@ Route::get('vistorias/instituicao/{instituicao_id}', [VistoriaController::class,
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/utilizadores/{id}/permissoes', [UtilizadorController::class, 'atribuirPermissoes'])->name('utilizadores.atribuirPermissoes');
+Route::post('/inspetores', [UtilizadorController::class, 'registrarInspetor'])->name('inspetores.registrar');
+Route::get('/inspetores/{id}/edit', [UtilizadorController::class, 'editarInspetor'])->name('inspetores.edit');
+Route::get('/inspetores/create', [UtilizadorController::class, 'createInspetor'])->name('inspetores.create');

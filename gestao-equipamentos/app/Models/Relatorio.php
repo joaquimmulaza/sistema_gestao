@@ -21,4 +21,9 @@ class Relatorio extends Model
     {
         return $this->belongsTo(Vistoria::class); // Relacionamento inverso: um relatório pertence a uma vistoria
     }
+
+    public function inspetor()
+    {
+        return $this->belongsTo(Inspetor::class);
+    }
 }

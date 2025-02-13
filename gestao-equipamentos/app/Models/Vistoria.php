@@ -14,4 +14,10 @@ class Vistoria extends Model
     {
         return $this->belongsTo(Instituicao::class);
     }
+
+    public function inspetor()
+    {
+        return $this->belongsTo(Inspetor::class);
+    }
+
 }
