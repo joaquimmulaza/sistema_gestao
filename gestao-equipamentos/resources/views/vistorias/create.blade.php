@@ -10,6 +10,10 @@
             <input type="date" class="form-control" name="data" required>
         </div>
         <div class="mb-3">
+            <label for="observacoes" class="form-label">Observações</label>
+            <textarea class="form-control" name="observacoes" rows="4"></textarea>
+        </div>
+        <div class="mb-3">
             <label for="instituicao_id" class="form-label">Instituição</label>
             <select name="instituicao_id" class="form-control" required>
                 @foreach($instituicoes as $instituicao)

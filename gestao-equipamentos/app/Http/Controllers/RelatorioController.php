@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Relatorio;
 use App\Models\Vistoria;
 use Illuminate\Http\Request;
+use PDF;
 
 class RelatorioController extends Controller
 {
@@ -51,7 +52,7 @@ class RelatorioController extends Controller
             'titulo' => 'required|string|max:191',
             'data' => 'required|date',
             'descricao' => 'required',
-            'vistoria_id' => 'required|exists:vistorias,id',
+            'vistoria_id' => 'nullable|exists:vistorias,id',
         ]);
 
         $relatorio->update($request->all());
@@ -70,5 +71,11 @@ class RelatorioController extends Controller
         $relatorios = Relatorio::where('vistoria_id', $vistoria_id)->get();
         return view('relatorios.listar_por_vistoria', compact('relatorios'));
     }
-}
 
+    public function gerarPDF(Relatorio $relatorio)
+    {
+        $pdf = PDF::loadView('relatorios.pdf', compact('relatorio'));
+        return $pdf->download('relatorio_'.$relatorio->id.'.pdf');
+    }
+
+}

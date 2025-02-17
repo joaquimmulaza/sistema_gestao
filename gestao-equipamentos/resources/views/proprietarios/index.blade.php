@@ -12,6 +12,7 @@
                 <th>Telefone</th>
                 <th>Nº Bilhete</th>
                 <th>Validade do Bilhete</th>
+                <th>Instituição</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -22,6 +23,8 @@
                     <td>{{ $proprietario->telefone }}</td>
                     <td>{{ $proprietario->n_bilhete }}</td>
                     <td>{{ $proprietario->validade_bilhete }}</td>
+                    <td>{{ $proprietario->instituicao ? $proprietario->instituicao->nome : 'Nenhuma' }}</td>
+
                     <td>
                         <a href="{{ route('proprietarios.edit', $proprietario) }}" class="btn btn-sm btn-warning">Editar</a>
                         <form action="{{ route('proprietarios.destroy', $proprietario) }}" method="POST" class="d-inline">

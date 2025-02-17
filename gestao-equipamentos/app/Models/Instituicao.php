@@ -12,4 +12,9 @@ class Instituicao extends Model
     
 
     protected $fillable = ['nome', 'activa', 'data_registo'];
+
+    public function proprietarios()
+    {
+        return $this->hasMany(Proprietario::class);
+    }
 }

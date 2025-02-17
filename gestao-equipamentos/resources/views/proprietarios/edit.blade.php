@@ -15,6 +15,25 @@
             <input type="text" name="telefone" class="form-control" value="{{ $proprietario->telefone }}">
         </div>
         <div class="form-group">
+            <label for="instituicao_id">Instituição</label>
+            <select name="instituicao_id" class="form-control">
+                <option value="">Nenhuma</option>
+                @foreach ($instituicoes as $instituicao)
+                    <option value="{{ $instituicao->id }}" 
+                        {{ isset($proprietario) && $proprietario->instituicao_id == $instituicao->id ? 'selected' : '' }}>
+                        {{ $instituicao->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        @if ($errors->has('instituicao_id'))
+    <div class="alert alert-danger">
+        {{ $errors->first('instituicao_id') }}
+    </div>
+@endif
+
+        
+        <div class="form-group">
             <label>Nº Bilhete</label>
             <input type="text" name="n_bilhete" class="form-control" value="{{ $proprietario->n_bilhete }}" required>
         </div>

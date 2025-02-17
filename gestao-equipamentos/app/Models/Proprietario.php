@@ -10,5 +10,10 @@ class Proprietario extends Model
 
     protected $table = 'proprietarios';
 
-    protected $fillable = ['nome', 'telefone', 'n_bilhete', 'validade_bilhete'];
+    protected $fillable = ['nome', 'telefone', 'n_bilhete', 'validade_bilhete', 'instituicao_id'];
+
+    public function instituicao()
+    {
+        return $this->belongsTo(Instituicao::class);
+    }
 }

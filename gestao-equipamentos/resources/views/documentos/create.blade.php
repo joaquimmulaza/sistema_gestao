@@ -1,12 +1,9 @@
-@extends('adminlte::page')
+@extends('layouts.app')
 
 @section('title', 'Novo Documento')
 
-@section('content_header')
-    <h1>Cadastrar Documento</h1>
-@endsection
-
 @section('content')
+<h1>Cadastrar Documento</h1>
     <form action="{{ route('documentos.store') }}" method="POST">
         @csrf
         <div class="form-group">

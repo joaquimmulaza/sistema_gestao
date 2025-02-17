@@ -54,3 +54,4 @@ Route::post('/utilizadores/{id}/permissoes', [UtilizadorController::class, 'atri
 Route::post('/inspetores', [UtilizadorController::class, 'registrarInspetor'])->name('inspetores.registrar');
 Route::get('/inspetores/{id}/edit', [UtilizadorController::class, 'editarInspetor'])->name('inspetores.edit');
 Route::get('/inspetores/create', [UtilizadorController::class, 'createInspetor'])->name('inspetores.create');
+Route::get('/relatorios/{relatorio}/pdf', [RelatorioController::class, 'gerarPDF'])->name('relatorios.pdf');

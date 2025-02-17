@@ -81,15 +81,27 @@ class UtilizadorController extends Controller
      * Registrar um inspetor.
      */
     public function createInspetor()
-{
-    return view('utilizadores.create_inspector');
-}
+    {
+        return view('utilizadores.create_inspector');
+    }
     public function registrarInspetor(Request $request)
     {
         $request->validate([
             'nome' => 'required|string|max:191',
         ]);
 
+        $inspetor = Inspetor::create([
+            'nome' => $request->nome,
+        ]);
+
+        $validator = Validator::make($request->all(), [
+            'nome' => 'required|string|max:191|unique:inspetores,nome',
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+    
         $inspetor = Inspetor::create([
             'nome' => $request->nome,
         ]);

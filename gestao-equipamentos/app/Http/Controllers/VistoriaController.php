@@ -24,7 +24,7 @@ class VistoriaController extends Controller
     {
         $request->validate([
             'data' => 'required|date',
-            'instituicao_id' => 'required|exists:instituicaos,id',
+            'instituicao_id' => 'required|exists:instituicoes,id',
         ]);
 
         Vistoria::create($request->all());
@@ -47,7 +47,7 @@ class VistoriaController extends Controller
     {
         $request->validate([
             'data' => 'required|date',
-            'instituicao_id' => 'required|exists:instituicaos,id',
+            'instituicao_id' => 'required|exists:instituicoes,id',
         ]);
 
         $vistoria->update($request->all());

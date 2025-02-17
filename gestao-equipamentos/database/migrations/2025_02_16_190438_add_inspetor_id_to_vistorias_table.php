@@ -14,8 +14,7 @@ class AddInspetorIdToVistoriasTable extends Migration
     public function up()
     {
         Schema::table('vistorias', function (Blueprint $table) {
-            $table->unsignedBigInteger('inspetor_id')->nullable();
-            $table->foreign('inspetor_id')->references('id')->on('inspetores')->onDelete('set null'); // Adicionando onDelete
+            //
         });
     }
 
@@ -27,8 +26,7 @@ class AddInspetorIdToVistoriasTable extends Migration
     public function down()
     {
         Schema::table('vistorias', function (Blueprint $table) {
-            $table->dropForeign(['inspetor_id']); // Removendo a chave estrangeira
-            $table->dropColumn('inspetor_id'); // Removendo a coluna
+            //
         });
     }
 }
