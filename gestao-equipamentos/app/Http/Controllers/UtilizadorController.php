@@ -19,6 +19,12 @@ class UtilizadorController extends Controller
         return view('utilizadores.index', compact('utilizadores'));
     }
 
+    public function listarInspetor()
+    {
+        $inspetores = Inspetor::all();
+        return view('inspetores.index', compact('inspetores'));
+    }
+
     /**
      * Mostrar um utilizador específico.
      */

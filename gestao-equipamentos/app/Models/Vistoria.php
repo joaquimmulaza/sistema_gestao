@@ -8,7 +8,7 @@ class Vistoria extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['data', 'observacoes', 'instituicao_id'];
+    protected $fillable = ['data', 'observacoes', 'instituicao_id', 'inspetor_id'];
 
     public function instituicao()
     {

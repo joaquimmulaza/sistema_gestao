@@ -6,6 +6,7 @@
     <p><strong>Data:</strong> {{ $vistoria->data }}</p>
     <p><strong>Observações:</strong> {{ $vistoria->observacoes }}</p>
     <p><strong>Instituição:</strong> {{ $vistoria->instituicao->nome ?? 'N/A' }}</p>
+    <p><strong>Inspetor responsável:</strong> {{$vistoria->inspetor->nome  ?? 'N/A'}}</p>
     <a href="{{ route('vistorias.index') }}" class="btn btn-secondary">Voltar</a>
 </div>
 @endsection

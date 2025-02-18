@@ -14,5 +14,6 @@
     <p><strong>Data:</strong> {{ \Carbon\Carbon::parse($relatorio->data)->format('d/m/Y') }}</p>
     <p><strong>Descrição:</strong> {{ $relatorio->descricao }}</p>
     <p><strong>Vistoria:</strong> {{ $relatorio->vistoria->instituicao_id ?? 'N/A' }}</p>
+    <p><strong>Inspetor:</strong> {{ $relatorio->inspetor->nome ?? 'N/A' }}</p>
 </body>
 </html>

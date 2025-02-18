@@ -27,6 +27,14 @@
                 @endforeach
             </select>
         </div>
+        <div class="mb-3">
+            <label for="inspetor_id" class="form-label">Inspetor Responsável</label>
+            <select name="inspetor_id" class="form-control" required>
+                @foreach($inspetores as $inspetor)
+                    <option value="{{ $inspetor->id }}">{{ $inspetor->nome }}</option>
+                @endforeach
+            </select>
+        </div>
 
         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
         <a href="{{ route('vistorias.index') }}" class="btn btn-secondary">Cancelar</a>

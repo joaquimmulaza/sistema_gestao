@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Relatorio;
 use App\Models\Vistoria;
 use Illuminate\Http\Request;
+use App\Models\Inspetor;
 use PDF;
 
 class RelatorioController extends Controller
@@ -18,7 +19,8 @@ class RelatorioController extends Controller
     public function create()
     {
         $vistorias = Vistoria::all();
-        return view('relatorios.create', compact('vistorias'));
+        $inspetores = Inspetor::all();
+        return view('relatorios.create', compact('vistorias', 'inspetores'));
     }
 
     public function store(Request $request)
@@ -35,15 +37,17 @@ class RelatorioController extends Controller
         return redirect()->route('relatorios.index')->with('success', 'Relatório criado com sucesso!');
     }
 
-    public function show(Relatorio $relatorio)
+    public function show($id)
     {
-        return view('relatorios.show', compact('relatorio'));
+        $relatorio = Relatorio::with('inspetor')->findOrFail($id);
+        return view('relatorios.show', compact('relatorio',));
     }
 
     public function edit(Relatorio $relatorio)
     {
         $vistorias = Vistoria::all();
-        return view('relatorios.edit', compact('relatorio', 'vistorias'));
+        $inspetores = Inspetor::all();
+        return view('relatorios.edit', compact('relatorio', 'vistorias', 'inspetores'));
     }
 
     public function update(Request $request, Relatorio $relatorio)

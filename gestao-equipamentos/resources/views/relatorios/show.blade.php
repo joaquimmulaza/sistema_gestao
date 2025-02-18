@@ -9,6 +9,7 @@
             <p><strong>Data:</strong> {{ $relatorio->data }}</p>
             <p><strong>Descrição: </strong>{{ $relatorio->descricao }}</p>
             <p><strong>Vistoria:</strong> {{ $relatorio->vistoria_id }}</p>
+            <p><strong>Inspetor:</strong> {{$relatorio->inspetor->nome  ?? 'N/A'}}</p>
         </div>
     </div>
     <a href="{{ route('relatorios.index') }}" class="btn btn-secondary mt-3">Voltar</a>

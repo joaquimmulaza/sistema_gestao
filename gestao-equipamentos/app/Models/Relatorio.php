@@ -11,7 +11,7 @@ class Relatorio extends Model
 
     protected $table = 'relatorios';
 
-    protected $fillable = ['titulo', 'data', 'descricao', 'vistoria_id']; // Incluindo 'vistoria_id'
+    protected $fillable = ['titulo', 'data', 'descricao', 'vistoria_id', 'inspetor_id']; // Incluindo 'vistoria_id'
 
     /**
      * Define a relação entre Relatorio e Vistoria.

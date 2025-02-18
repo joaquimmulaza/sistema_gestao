@@ -22,6 +22,23 @@
             <input type="date" class="form-control" name="data" value="{{ $relatorio->data }}" required>
         </div>
 
+        <div class="mb-3">
+            <label class="form-label">Vistoria</label>
+            <select class="form-control" name="vistoria_id">
+                @foreach($vistorias as $vistoria)
+                    <option value="{{ $vistoria->id }}">{{ $vistoria->instituicao_id }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="inspetor_id" class="form-label">Inspetor Responsável</label>
+            <select name="inspetor_id" class="form-control" required>
+                @foreach($inspetores as $inspetor)
+                    <option value="{{ $inspetor->id }}">{{ $inspetor->nome }}</option>
+                @endforeach
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
         <a href="{{ route('relatorios.index') }}" class="btn btn-secondary">Cancelar</a>
     </form>
