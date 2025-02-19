@@ -1,0 +1,6 @@
+.nav-item.active > .nav-link {
+    background-color: #007bff !important; /* Azul padrão do Bootstrap */
+    color: white !important;
+    font-weight: bold;
+    border-radius: 5px;
+}

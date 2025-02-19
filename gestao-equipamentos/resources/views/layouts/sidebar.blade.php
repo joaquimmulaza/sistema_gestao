@@ -14,7 +14,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item{{ Request::is('instituicoes*') ? 'active' : '' }}">
                     <a href="{{ route('instituicoes.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-building"></i>
                         <p>Instituições</p>
