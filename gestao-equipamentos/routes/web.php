@@ -26,18 +26,14 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
-});
-
-
-Auth::routes();
-
+    
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('instituicoes', InstituicaoController::class)->parameters([
     'instituicoes' => 'instituicao',
 ]);
 Route::resource('proprietarios', ProprietarioController::class);
-Route::resource('vistorias', VistoriaController::class);
+Route::resource('vistorias', VistoriaController::class); 
 Route::resource('relatorios', RelatorioController::class);
 Route::resource('documentos', DocumentoController::class);
 Route::resource('utilizadores', UtilizadorController::class)->parameters(['utilizadores' => 'utilizadores']);
@@ -53,5 +49,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::post('/utilizadores/{id}/permissoes', [UtilizadorController::class, 'atribuirPermissoes'])->name('utilizadores.atribuirPermissoes');
 Route::post('/inspetores', [UtilizadorController::class, 'registrarInspetor'])->name('inspetores.registrar');
 Route::get('/inspetores/{id}/edit', [UtilizadorController::class, 'editarInspetor'])->name('inspetores.edit');
+Route::post('/inspetores/{id}/edit', [UtilizadorController::class, 'updateInspetor'])->name('inspetores.update');
+Route::delete('/inspetores/{id}/delete', [UtilizadorController::class, 'destroyInspetor'])->name('inspetores.destroy');
 Route::get('/inspetores/create', [UtilizadorController::class, 'createInspetor'])->name('inspetores.create');
+Route::get('/inspetores', [UtilizadorController::class, 'index_inspetor'])->name('inspetores.index');
 Route::get('/relatorios/{relatorio}/pdf', [RelatorioController::class, 'gerarPDF'])->name('relatorios.pdf');
+});
+
+
+Auth::routes();

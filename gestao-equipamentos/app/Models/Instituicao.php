@@ -17,4 +17,9 @@ class Instituicao extends Model
     {
         return $this->hasMany(Proprietario::class);
     }
+
+    public function endereco()
+    {
+        return $this->hasOne(Endereco::class);
+    }
 }

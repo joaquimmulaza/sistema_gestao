@@ -13,6 +13,20 @@
             <input type="text" name="nome" class="form-control" value="{{ $instituicao->nome }}" required>
         </div>
         <div class="form-group">
+            <label for="municipio">Município</label>
+            <input type="text" name="municipio" class="form-control" value="{{ $instituicao->endereco->municipio ?? 'N/A'}}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="comuna">Comuna</label>
+            <input type="text" name="comuna" class="form-control" value="{{ $instituicao->endereco->comuna ?? 'N/A'}}">
+        </div>
+        
+        <div class="form-group">
+            <label for="distrito">Distrito</label>
+            <input type="text" name="distrito" class="form-control" value="{{ $instituicao->endereco->distrito ?? 'N/A'}}">
+        </div>
+        <div class="form-group">
             <label for="activa">Ativa</label>
             <select name="activa" class="form-control" required>
                 <option value="1" {{ $instituicao->activa == 1 ? 'selected' : '' }}>Ativa</option>

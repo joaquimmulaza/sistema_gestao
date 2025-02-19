@@ -10,6 +10,22 @@
             <label for="nome">Nome</label>
             <input type="text" name="nome" class="form-control" required>
         </div>
+
+        <div class="form-group">
+            <label for="municipio">Município</label>
+            <input type="text" name="municipio" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="comuna">Comuna</label>
+            <input type="text" name="comuna" class="form-control">
+        </div>
+        
+        <div class="form-group">
+            <label for="distrito">Distrito</label>
+            <input type="text" name="distrito" class="form-control">
+        </div>
+        
         
         <div class="form-group">
             <label for="activa">Ativa</label>

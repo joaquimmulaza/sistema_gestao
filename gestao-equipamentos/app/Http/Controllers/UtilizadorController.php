@@ -19,11 +19,11 @@ class UtilizadorController extends Controller
         return view('utilizadores.index', compact('utilizadores'));
     }
 
-    public function listarInspetor()
-    {
-        $inspetores = Inspetor::all();
-        return view('inspetores.index', compact('inspetores'));
-    }
+    // public function listarInspetor()
+    // {
+    //     $inspetores = Inspetor::all();
+    //     return view('inspetores.index', compact('inspetores'));
+    // }
 
     /**
      * Mostrar um utilizador específico.
@@ -88,7 +88,7 @@ class UtilizadorController extends Controller
      */
     public function createInspetor()
     {
-        return view('utilizadores.create_inspector');
+        return view('inspetores.create');
     }
     public function registrarInspetor(Request $request)
     {
@@ -96,23 +96,18 @@ class UtilizadorController extends Controller
             'nome' => 'required|string|max:191',
         ]);
 
-        $inspetor = Inspetor::create([
-            'nome' => $request->nome,
-        ]);
-
-        $validator = Validator::make($request->all(), [
-            'nome' => 'required|string|max:191|unique:inspetores,nome',
-        ]);
-    
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
     
         $inspetor = Inspetor::create([
             'nome' => $request->nome,
         ]);
 
-        return redirect()->route('utilizadores.index')->with('success', 'Inspetor registrado com sucesso.');
+        return redirect()->route('inspetores.index')->with('success', 'Inspetor registrado com sucesso.');
+    }
+
+    public function index_inspetor()
+    {
+        $inspetores = Inspetor::all();
+        return view('inspetores.index', compact('inspetores'));
     }
 
 
@@ -121,8 +116,31 @@ class UtilizadorController extends Controller
      */
     public function editarInspetor($id)
     {
-        $inspetor = Utilizador::findOrFail($id);
-        return view('utilizadores.edit-inspetor', compact('inspetor'));
+        $inspetor = Inspetor::findOrFail($id);
+        return view('inspetores.edit', compact('inspetor'));
+    }
+
+    public function updateInspetor(Request $request, $id)
+    {
+        $inspetor = Inspetor::findOrFail($id);
+
+        $request -> validate([
+            'nome' => 'required|string|max:191' . $id
+        ]);
+
+        $inspetor->update([
+            'nome' => $request->nome,
+        ]);
+
+        return redirect()->route('inspetores.index')->with('sucess', 'Inspetor atualizado com sucesso');
+    }
+
+    public function destroyInspetor($id)
+    {
+        $inspetor = Inspetor::findOrFail($id);
+        $inspetor->delete();
+
+        return redirect()->route('inspetores.index')->with('success', 'Inspetor removido com sucesso.');
     }
 
     public function destroy($id)

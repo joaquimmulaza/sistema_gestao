@@ -10,6 +10,7 @@
             <tr>
                 <th>Nome</th>
                 <th>Status</th>
+                <th>Município</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -24,6 +25,7 @@
                             Inativa
                         @endif
                         </td>
+                        <td>{{ $instituicao->endereco->municipio ?? 'Não informado' }}</td>
                     <td>
                         <a href="{{ route('instituicoes.edit', $instituicao->id) }}" class="btn btn-sm btn-warning">Editar</a>
                         <form action="{{ route('instituicoes.destroy', $instituicao->id) }}" method="POST" class="d-inline">

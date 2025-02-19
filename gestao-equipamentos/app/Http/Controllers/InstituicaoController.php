@@ -26,16 +26,24 @@ class InstituicaoController extends Controller
             'nome' => 'required', // Campo obrigatório
             'activa' => 'required|boolean', // Campo activa deve ser um valor booleano
             'data_registo' => 'required|date', // Campo data_registo deve ser uma data válida
+            'municipio' => 'required',
+            'comuna' => 'nullable',
+            'distrito' => 'nullable',
         ]);
 
-        $activa = (int) $request->input('activa');
+        
 
         // Cria a nova instituição
-        Instituicao::create([
+        $instituicao = Instituicao::create([
             'nome' => $request->nome,
-            'activa' => $activa, // O valor de activa é atribuído
-            'data_registo' => $request->data_registo, // O valor de data_registo é atribuído
-            
+            'activa' => (int) $request->activa,
+            'data_registo' => $request->data_registo,
+        ]);
+
+        $instituicao->endereco()->create([
+            'municipio' => $request->municipio,
+            'comuna' => $request->comuna,
+            'distrito' => $request->distrito,
         ]);
 
         return redirect()->route('instituicoes.index')->with('success', 'Instituição criada com sucesso!');
@@ -58,9 +66,12 @@ class InstituicaoController extends Controller
     {
         // Valida os campos para atualização
         $request->validate([
-            'nome' => 'required',
-            'activa' => 'required|boolean', // Campo activa
-            'data_registo' => 'required|date', // Campo data_registo
+            'nome' => 'required', // Campo obrigatório
+            'activa' => 'required|boolean', // Campo activa deve ser um valor booleano
+            'data_registo' => 'required|date', // Campo data_registo deve ser uma data válida
+            'municipio' => 'required',
+            'comuna' => 'nullable',
+            'distrito' => 'nullable',
         ]);
 
         $activa = (int) $request->input('activa');
@@ -72,6 +83,16 @@ class InstituicaoController extends Controller
             'data_registo' => $request->data_registo,
             // O Eloquent gerencia automaticamente os campos 'updated_at'
         ]);
+
+         // Atualiza ou cria o endereço associado
+        $instituicao->endereco()->updateOrCreate(
+            ['instituicao_id' => $instituicao->id], // Condição para encontrar o endereço
+            [
+                'municipio' => $request->municipio,
+                'comuna' => $request->comuna,
+                'distrito' => $request->distrito,
+            ]
+        );
 
         return redirect()->route('instituicoes.index')->with('success', 'Instituição atualizada com sucesso!');
     }
