@@ -17,22 +17,41 @@ class DocumentoController extends Controller
 
     public function create()
     {
-        return view('documentos.create');
+        $documento = Documento::all();
+        $instituicoes = Instituicao::all();
+        $vistorias = Vistoria::all();
+        $relatorios = Relatorio::all();
+        return view('documentos.create', compact('documento', 'instituicoes', 'vistorias', 'relatorios'));
     }
 
     public function store(Request $request)
     {
+        
         $request->validate([
             'tipo' => 'required|string|max:191',
             'data_validade' => 'required|date',
             'nome' => 'required|string|max:191',
-            'url' => 'required|url|max:191',
+            'documento' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'instituicao_id' => 'nullable|exists:instituicoes,id',
             'vistoria_id' => 'nullable|exists:vistorias,id',
-            'relatorio_id' => 'nullable|exists:vistorias,id'
+            'relatorio_id' => 'nullable|exists:relatorios,id'
         ]);
 
-        Documento::create($request->all());
+        if ($request->hasFile('documento')) {
+            $file = $request->file('documento');
+            $path = $file->store('documentos', 'public'); // Salva o arquivo na pasta 'storage/app/public/documentos'
+        }
+    
+        Documento::create([
+            'nome' => $request->nome,
+            'tipo' => $request->tipo,
+            'data_validade' => $request->data_validade,
+            'caminho_arquivo' => $path ?? null, // Salva o caminho do arquivo no banco de dados
+            'instituicao_id' => $request->instituicao_id,
+            'vistoria_id' => $request->vistoria_id,
+            'relatorio_id' => $request->relatorio_id,
+        ]);
+
         return redirect()->route('documentos.index')->with('success', 'Documento cadastrado com sucesso!');
     }
 
@@ -53,22 +72,37 @@ class DocumentoController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $request->validate([
-            'tipo' => 'required|string|max:191',
-            'data_validade' => 'required|date',
-            'nome' => 'required|string|max:191',
-            'url' => 'required|url|max:191',
-            'instituicao_id' => 'nullable|exists:instituicoes,id',
-            'vistoria_id' => 'nullable|exists:vistorias,id',
-            'relatorio_id' => 'nullable|exists:vistorias,id'
-        ]);
+{
+    $request->validate([
+        'tipo' => 'required|string|max:191',
+        'data_validade' => 'required|date',
+        'nome' => 'required|string|max:191',
+        'documento' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+        'instituicao_id' => 'nullable|exists:instituicoes,id',
+        'vistoria_id' => 'nullable|exists:vistorias,id',
+        'relatorio_id' => 'nullable|exists:relatorios,id'
+    ]);
 
-        $documento = Documento::findOrFail($id);
-        $documento->update($request->all());
+    $documento = Documento::findOrFail($id);
+    $dados = $request->except('documento'); // Pega todos os dados, menos o arquivo
 
-        return redirect()->route('documentos.index')->with('success', 'Documento atualizado com sucesso!');
+    if ($request->hasFile('documento')) {
+        // Deleta o arquivo antigo, se existir
+        if ($documento->caminho_arquivo && \Storage::disk('public')->exists($documento->caminho_arquivo)) {
+            \Storage::disk('public')->delete($documento->caminho_arquivo);
+        }
+
+        // Armazena o novo arquivo
+        $novoCaminho = $request->file('documento')->store('documentos', 'public');
+        $dados['caminho_arquivo'] = $novoCaminho;
     }
+
+    // Atualiza os dados no banco
+    $documento->update($dados);
+
+    return redirect()->route('documentos.index')->with('success', 'Documento atualizado com sucesso!');
+}
+
 
     public function destroy($id)
     {

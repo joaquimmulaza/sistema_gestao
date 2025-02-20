@@ -4,10 +4,6 @@
 <h2>Documentos</h2>
     <a href="{{ route('documentos.create') }}" class="btn btn-success mb-3">Novo Documento</a>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
     <table class="table table-striped">
         <thead>
             <tr>

@@ -4,7 +4,7 @@
 <div class="container">
     <h2>Editar Documento</h2>
     
-    <form action="{{ route('documentos.update', $documento->id) }}" method="POST">
+    <form action="{{ route('documentos.update', $documento->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -23,9 +23,9 @@
             <input type="date" class="form-control" id="data_validade" name="data_validade" value="{{ old('data_validade', $documento->data_validade) }}" required>
         </div>
 
-        <div class="mb-3">
-            <label for="url" class="form-label">URL do Documento</label>
-            <input type="text" class="form-control" id="url" name="url" value="{{ old('url', $documento->url) }}">
+        <div class="form-group">
+            <label>Documento (PDF, Imagem, etc.)</label>
+            <input type="file" name="documento" class="form-control">
         </div>
 
         <div class="mb-3">

@@ -51,6 +51,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('inspetores.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>Inspetores</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('logs.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-list"></i>
                         <p>Logs</p>
